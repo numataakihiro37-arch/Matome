@@ -102,6 +102,21 @@
     margin-top:2px;
   }
 
+  .notice{
+    padding:10px 4px;
+    border-bottom:1px solid var(--line);
+  }
+  .notice .date{
+    font-size:12px;
+    color:var(--accent);
+    font-weight:600;
+    margin-right:8px;
+  }
+  .notice .text{
+    font-size:14px;
+    color:var(--text);
+  }
+
   .view{ display:none; }
   .view.active{ display:block; }
 
@@ -126,6 +141,9 @@
   <!-- Step 1: 学期選択 -->
   <div id="view-term" class="view active">
     <div class="choice-grid" id="term-grid"></div>
+
+    <h2 style="margin-top:32px;">お知らせ</h2>
+    <ul id="notice-list"></ul>
   </div>
 
   <!-- Step 2: 教科選択 -->
@@ -149,7 +167,7 @@
   const DATA = {
     "1学期": {
       "数学": [
-        { title: "進数", url: "https://benkan-three.vercel.app", note: "レジュメ" }
+        { title: "進数", url: "https://benkan-three.vercel.app", note: "情報の進数" }
       ],
       "英語": [
         { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
@@ -158,7 +176,7 @@
         { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
       ],
       "化学": [
-        { title: "生物期末", url: "https://sekaishi1.vercel.app", note: "期末暗記用" }
+        { title: "生物", url: "https://sekaishi1.vercel.app", note: "期末問題" }
       ]
     },
     "2学期": {
@@ -168,6 +186,13 @@
       "数学": [], "英語": [], "物理": [], "化学": []
     }
   };
+
+  // ▼お知らせ：新しいものを配列の先頭に追加してください
+  const NOTICES = [
+    { date: "2026.07.08", text: "進数と生物期末問題追加"}
+  
+    { date: "2026.07.08", text: "サイトを公開しました" }
+  ];
 
   let currentTerm = null;
 
@@ -241,7 +266,19 @@
   document.getElementById("back-to-term").onclick = () => showView(viewTerm);
   document.getElementById("back-to-subject").onclick = () => showView(viewSubject);
 
+  function renderNotices(){
+    const list = document.getElementById("notice-list");
+    list.innerHTML = "";
+    NOTICES.forEach(n => {
+      const li = document.createElement("li");
+      li.className = "notice";
+      li.innerHTML = '<span class="date">' + n.date + '</span><span class="text">' + n.text + '</span>';
+      list.appendChild(li);
+    });
+  }
+
   renderTerms();
+  renderNotices();
 </script>
 </body>
 </html>
