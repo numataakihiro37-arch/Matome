@@ -1,247 +1,344 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>リンク</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>生物基礎 確認テスト(遺伝子とその働き)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
 <style>
-  :root{
-    --bg:#fafafa;
-    --text:#222;
-    --sub:#666;
-    --line:#e0e0e0;
-    --accent:#2563eb;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:-apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-    line-height:1.6;
-  }
-  .wrap{
-    max-width:640px;
-    margin:0 auto;
-    padding:48px 20px 80px;
-  }
-  h1{
-    font-size:22px;
-    margin:0 0 24px;
-  }
-  .back{
-    display:inline-block;
-    font-size:13px;
-    color:var(--accent);
-    text-decoration:none;
-    margin-bottom:20px;
-    cursor:pointer;
-  }
-  .back::before{ content:"‹ "; }
-
-  .choice-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-  }
-  .choice{
-    display:block;
-    text-align:center;
-    padding:22px 10px;
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:8px;
-    font-size:16px;
-    font-weight:600;
-    color:var(--text);
-    cursor:pointer;
-    transition:background .12s ease, border-color .12s ease;
-  }
-  .choice:hover, .choice:focus-visible{
-    background:#f0f4ff;
-    border-color:var(--accent);
-    outline:none;
-  }
-
-  h2{
-    font-size:14px;
-    color:var(--sub);
-    font-weight:600;
-    margin:0 0 10px;
-    padding-bottom:6px;
-    border-bottom:1px solid var(--line);
-  }
-  ul{
-    list-style:none;
-    margin:0; padding:0;
-  }
-  li + li{ margin-top:2px; }
-  a.link{
-    display:block;
-    text-decoration:none;
-    color:var(--text);
-    padding:12px 4px;
-    border-bottom:1px solid var(--line);
-    transition:background .12s ease;
-  }
-  a.link:hover, a.link:focus-visible{
-    background:#f0f4ff;
-    outline:none;
-  }
-  a.link .title{
-    font-size:15px;
-    font-weight:600;
-  }
-  a.link .title::after{
-    content:" ›";
-    color:var(--accent);
-  }
-  a.link .note{
-    font-size:13px;
-    color:var(--sub);
-    margin-top:2px;
-  }
-
-  .view{ display:none; }
-  .view.active{ display:block; }
-
-  footer{
-    margin-top:48px;
-    font-size:12px;
-    color:var(--sub);
-  }
+:root {
+  --paper: #eef3ee;
+  --sumi: #1c231f;
+  --sumi-soft: #4a534c;
+  --bio: #1f5c3a;
+  --bio-light: #2f7d51;
+  --heli: #b2542f;
+  --gold: #7a8c62;
+  --line: rgba(31, 92, 58, 0.14);
+  --ok: #1f5c3a;
+  --font-display: "Zen Old Mincho", serif;
+  --font-body: "Zen Kaku Gothic New", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--sumi);
+  background-color: var(--paper);
+  background-image: repeating-linear-gradient(var(--paper) 0px, var(--paper) 27px, var(--line) 27px, var(--line) 28px);
+  -webkit-font-smoothing: antialiased;
+}
+.page { min-height: 100%; display: flex; flex-direction: column; align-items: center; padding: 40px 18px 72px; }
+.doc-header { width: 100%; max-width: 720px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 4px 10px; border-bottom: 2px solid var(--sumi); margin-bottom: 30px; }
+.doc-header .no { font-size: 12px; letter-spacing: 0.08em; color: var(--sumi-soft); }
+.doc-header .brand { font-family: var(--font-display); font-weight: 800; font-size: 15px; letter-spacing: 0.14em; color: var(--bio); }
+.shell { width: 100%; max-width: 720px; }
+.cover { background: rgba(255,255,252,0.6); border: 1px solid var(--sumi); box-shadow: 6px 6px 0 rgba(31,92,58,0.1); padding: 46px 34px 38px; position: relative; overflow: hidden; }
+.cover::before { content: ""; position: absolute; inset: 8px; border: 1px solid var(--gold); opacity: 0.5; pointer-events: none; }
+.cover-eyebrow { font-size: 12px; letter-spacing: 0.35em; color: var(--heli); font-weight: 700; margin: 0 0 14px; }
+.cover h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(28px, 6vw, 42px); line-height: 1.4; margin: 0 0 8px; color: var(--sumi); }
+.cover .sub { font-family: var(--font-display); color: var(--bio); font-size: 15px; margin: 0 0 28px; letter-spacing: 0.04em; }
+.toc { border-top: 1px solid var(--sumi); border-bottom: 1px solid var(--sumi); padding: 14px 0; margin-bottom: 30px; }
+.toc-row { display: flex; align-items: baseline; gap: 14px; padding: 9px 2px; font-size: 14px; }
+.toc-row + .toc-row { border-top: 1px dashed rgba(31,92,58,0.25); }
+.toc-row .label { font-family: var(--font-display); font-weight: 700; color: var(--heli); min-width: 52px; }
+.toc-row .title { font-weight: 700; color: var(--sumi); }
+.toc-row .range { margin-left: auto; color: var(--sumi-soft); font-size: 12px; }
+.start-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--bio); color: #f3f6ef; border: none; font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: 0.08em; padding: 15px 30px; cursor: pointer; }
+.start-btn:hover { background: var(--bio-light); }
+.meta-line { margin-top: 14px; font-size: 12.5px; color: var(--sumi-soft); }
+.progress-rail { display: flex; gap: 5px; margin-bottom: 18px; flex-wrap: wrap; }
+.progress-seg { flex: 1; min-width: 8px; height: 6px; background: rgba(31,92,58,0.14); position: relative; overflow: hidden; }
+.progress-seg > span { position: absolute; inset: 0; background: var(--bio); transform-origin: left; transition: transform 0.35s ease; }
+.section-tag { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); color: var(--heli); font-weight: 700; font-size: 12.5px; letter-spacing: 0.1em; margin-bottom: 6px; }
+.section-tag .count { margin-left: auto; font-family: var(--font-body); color: var(--sumi-soft); font-weight: 500; letter-spacing: 0; }
+.q-card { background: rgba(255,255,252,0.65); border: 1px solid var(--sumi); padding: 26px 24px 24px; position: relative; }
+.q-card::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--gold); opacity: 0.4; pointer-events: none; }
+.q-text { font-size: 16.5px; line-height: 1.75; font-weight: 700; margin: 0 0 20px; color: var(--sumi); }
+.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 4px; }
+.opt-btn { text-align: left; font-family: var(--font-body); font-size: 15px; background: transparent; border: 1.5px solid rgba(31,92,58,0.3); padding: 13px 16px; cursor: pointer; display: flex; gap: 12px; align-items: center; width: 100%; }
+.opt-btn .tag { font-family: var(--font-display); font-weight: 700; color: var(--bio); min-width: 18px; }
+.opt-btn:hover:not(:disabled) { border-color: var(--bio); background: rgba(31,92,58,0.05); }
+.opt-btn.correct { border-color: var(--ok); background: rgba(31,92,58,0.12); }
+.opt-btn.wrong { border-color: var(--heli); background: rgba(178,84,47,0.08); }
+.opt-btn:disabled { cursor: default; opacity: 0.75; }
+.text-input-row { display: flex; gap: 10px; margin-bottom: 4px; }
+.text-input-row input { flex: 1; font-family: var(--font-body); font-size: 15px; padding: 13px 14px; border: 1.5px solid rgba(31,92,58,0.3); background: #fffefb; }
+.submit-btn { font-family: var(--font-display); font-weight: 700; background: var(--sumi); color: var(--paper); border: none; padding: 0 22px; cursor: pointer; }
+.submit-btn:disabled { opacity: 0.4; cursor: default; }
+.feedback { margin-top: 18px; display: flex; gap: 16px; align-items: flex-start; }
+.stamp { flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; border: 3px solid var(--heli); color: var(--heli); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 14px; letter-spacing: 0.05em; transform: rotate(-14deg) scale(0); animation: stamp-in 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+.stamp.ok { border-color: var(--ok); color: var(--ok); }
+@keyframes stamp-in { to { transform: rotate(-14deg) scale(1); } }
+.explain { flex: 1; font-size: 13.5px; line-height: 1.75; color: var(--sumi-soft); padding-top: 4px; }
+.explain strong { color: var(--sumi); }
+.next-row { margin-top: 22px; display: flex; justify-content: flex-end; }
+.next-btn { font-family: var(--font-display); font-weight: 700; background: var(--bio); color: #f3f6ef; border: none; padding: 12px 24px; cursor: pointer; letter-spacing: 0.06em; }
+.next-btn:hover { background: var(--bio-light); }
+.result-card { background: rgba(255,255,252,0.65); border: 1px solid var(--sumi); padding: 40px 30px 30px; text-align: center; position: relative; }
+.result-card::before { content: ""; position: absolute; inset: 7px; border: 1px solid var(--gold); opacity: 0.45; pointer-events: none; }
+.big-stamp { width: 114px; height: 114px; margin: 0 auto 18px; border-radius: 50%; border: 5px solid var(--bio); color: var(--bio); display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--font-display); transform: rotate(-10deg) scale(0); animation: stamp-in 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+.big-stamp .score { font-size: 28px; font-weight: 800; line-height: 1; }
+.big-stamp .of { font-size: 11px; margin-top: 2px; }
+.result-msg { font-family: var(--font-display); font-size: 19px; font-weight: 700; margin: 0 0 6px; }
+.result-sub { font-size: 13px; color: var(--sumi-soft); margin: 0 0 28px; }
+.section-scores { text-align: left; border-top: 1px solid var(--sumi); padding-top: 20px; margin-bottom: 26px; }
+.sec-score-row { display: flex; align-items: center; gap: 12px; font-size: 13px; padding: 8px 0; }
+.sec-score-row .name { font-family: var(--font-display); font-weight: 700; min-width: 150px; }
+.sec-score-row .bar { flex: 1; height: 8px; background: rgba(31,92,58,0.12); position: relative; }
+.sec-score-row .bar > span { position: absolute; inset: 0; background: var(--bio); }
+.sec-score-row .val { min-width: 40px; text-align: right; color: var(--sumi-soft); }
+.review-list { text-align: left; border-top: 1px solid var(--sumi); padding-top: 20px; }
+.review-item { padding: 14px 0; border-bottom: 1px dashed rgba(31,92,58,0.25); font-size: 13px; line-height: 1.7; }
+.review-item .q { font-weight: 700; margin-bottom: 4px; }
+.review-item .your { color: var(--heli); }
+.review-item .right { color: var(--ok); }
+.retry-btn { margin-top: 26px; font-family: var(--font-display); font-weight: 700; background: var(--sumi); color: var(--paper); border: none; padding: 13px 26px; cursor: pointer; }
+.retry-btn:hover { background: #2c352e; }
+.foot-note { text-align: center; font-size: 11.5px; color: var(--sumi-soft); margin-top: 26px; letter-spacing: 0.04em; }
+@media (max-width: 480px) {
+  .q-card, .cover, .result-card { padding: 22px 16px 20px; }
+  .toc-row .range { display: none; }
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>リンク</h1>
-
-  <!--
-    ▼データの編集方法
-    下の script 内の DATA オブジェクトを書き換えるだけでOKです。
-    構造: DATA["1学期"]["数学"] = [ {title, url, note}, ... ]
-    学期・科目・リンクは自由に追加/削除できます。
-  -->
-
-  <!-- Step 1: 学期選択 -->
-  <div id="view-term" class="view active">
-    <div class="choice-grid" id="term-grid"></div>
+<div class="page">
+  <div class="doc-header">
+    <span class="no">生物基礎・確認テスト</span>
+    <span class="brand">遺伝子とその働き</span>
   </div>
-
-  <!-- Step 2: 教科選択 -->
-  <div id="view-subject" class="view">
-    <a class="back" id="back-to-term">学期選択に戻る</a>
-    <div class="choice-grid" id="subject-grid"></div>
-  </div>
-
-  <!-- Step 3: リンク一覧 -->
-  <div id="view-links" class="view">
-    <a class="back" id="back-to-subject">教科選択に戻る</a>
-    <h2 id="links-heading"></h2>
-    <ul id="links-list"></ul>
-  </div>
-
-  <footer>最終更新: 2026年7月</footer>
+  <div class="shell" id="app"></div>
+  <p class="foot-note" id="footNote"></p>
 </div>
 
 <script>
-  // ▼ここを編集してリンクを追加してください
-  const DATA = {
-    "1学期": {
-      "数学": [
-        { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
-      ],
-      "英語": [
-        { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
-      ],
-      "物理": [
-        { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
-      ],
-      "化学": [
-        { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
-      ]
-    },
-    "2学期": {
-      "数学": [], "英語": [], "物理": [], "化学": []
-    },
-    "3学期": {
-      "数学": [], "英語": [], "物理": [], "化学": []
-    }
-  };
+// ---------- 問題データ ----------
+const sections = [
+  { id: "keishitsu", label: "第1章", title: "遺伝子の本体の発見", range: "グリフィス〜ハーシーとチェイス" },
+  { id: "kouzou", label: "第2章", title: "DNAの構造", range: "ヌクレオチド〜シャルガフの規則" },
+  { id: "fukusei", label: "第3章", title: "複製・染色体・ゲノム", range: "半保存的複製〜ゲノム" },
+  { id: "shuki", label: "第4章", title: "細胞周期と体細胞分裂", range: "G1・S・G2・M期〜分裂の過程" },
+  { id: "tensha", label: "第5章", title: "転写・翻訳とセントラルドグマ", range: "コドン〜遺伝子発現" },
+];
 
-  let currentTerm = null;
+const questions = [
+  { section: "keishitsu", type: "mc", q: "グリフィスの実験(1928年)で、加熱殺菌したS型菌と生きたR型菌を混ぜてネズミに注射したところ何が起きたか?", options: ["ネズミは無事だった", "ネズミが肺炎で死に、体内から生きたS型菌が見つかった", "R型菌が全て死滅した", "S型菌とR型菌が融合して新種になった"], answer: 1, explain: "加熱殺菌したS型菌の何らかの物質によってR型菌がS型菌に変化する「形質転換」が起こり、ネズミは肺炎で死んだ。" },
+  { section: "keishitsu", type: "text", q: "ある物質によって生物の形や性質が変化する現象を何というか。", answer: ["形質転換"], explain: "グリフィスが発見した現象で、後にエイブリーらがその物質の正体を探究した。" },
+  { section: "keishitsu", type: "mc", q: "1944年、エイブリーらの実験でS型菌の抽出物をDNA分解酵素で処理すると形質転換は起きたか?", options: ["起きた", "起こらなかった", "R型菌が死滅した", "S型菌が増殖した"], answer: 1, explain: "DNA分解酵素で処理すると形質転換は起こらなかった一方、タンパク質分解酵素で処理しても形質転換は起きたことから、形質転換物質がDNAであることが示された。" },
+  { section: "keishitsu", type: "text", q: "肺炎双球菌のS型菌とR型菌の病原性の違いは何の有無によるか。", answer: ["被膜"], explain: "S型菌は被膜があり病原性、R型菌は被膜が無く非病原性である。" },
+  { section: "keishitsu", type: "mc", q: "1952年、ハーシーとチェイスがT2ファージを用いた実験で明らかにしたことは?", options: ["遺伝子の本体はタンパク質である", "遺伝子の本体はDNAであり、タンパク質ではない", "ファージには遺伝物質が存在しない", "DNAとタンパク質はどちらも遺伝物質である"], answer: 1, explain: "DNAとタンパク質を別々に標識して大腸菌に感染させる実験により、細菌に感染し増殖に関わるのはDNAであることを証明した。" },
+  { section: "keishitsu", type: "text", q: "ハーシーとチェイスが実験に用いた、細菌に感染するウイルスを何というか。", answer: ["バクテリオファージ", "ファージ"], explain: "バクテリオファージ(ファージ)はDNAとタンパク質の殻からできている。" },
 
-  const viewTerm = document.getElementById("view-term");
-  const viewSubject = document.getElementById("view-subject");
-  const viewLinks = document.getElementById("view-links");
+  { section: "kouzou", type: "text", q: "DNAの鎖を構成する基本単位を何というか。", answer: ["ヌクレオチド"], explain: "ヌクレオチドは糖・塩基・リン酸の3つの物質で構成されている。" },
+  { section: "kouzou", type: "mc", q: "DNAのヌクレオチドを構成する糖は何か?", options: ["リボース", "デオキシリボース", "グルコース", "スクロース"], answer: 1, explain: "DNAの糖はデオキシリボース。RNAの糖はリボースである点と区別する。" },
+  { section: "kouzou", type: "mc", q: "DNAの4種類の塩基のうち、互いに結合しやすい(相補的な)組み合わせとして正しいのは?", options: ["AとG、TとC", "AとT、GとC", "AとC、TとG", "全ての塩基が互いに結合する"], answer: 1, explain: "塩基の相補性により、AとT、GとCがそれぞれ結合しやすい。片方の鎖の塩基配列が決まれば、もう片方の鎖の塩基配列も決まる。" },
+  { section: "kouzou", type: "text", q: "1953年にDNAの二重らせん構造を提唱した2人の科学者は誰と誰か。", answer: ["ワトソンとクリック"], explain: "ワトソンとクリックは、ウィルキンスとフランクリンのX線回折写真などの研究結果をもとに二重らせん構造モデルを提唱した。" },
+  { section: "kouzou", type: "mc", q: "シャルガフの規則(1949年)の内容として正しいものは?", options: ["Aの割合は常にCの割合と等しい", "AとT、GとCの割合が生物によらずほぼ等しい", "DNAの塩基は生物種によらず同じ配列である", "塩基の割合は年齢によって変化する"], answer: 1, explain: "シャルガフの規則により、DNAを構成する塩基のAとT、GとCの割合は生物によらずほぼ等しいことが示された。" },
 
-  function showView(view){
-    [viewTerm, viewSubject, viewLinks].forEach(v => v.classList.remove("active"));
-    view.classList.add("active");
+  { section: "fukusei", type: "mc", q: "DNAの複製で、2本鎖が1本ずつに分離し、それぞれを鋳型として新しい鎖が合成される複製様式を何というか?", options: ["全保存的複製", "半保存的複製", "分散的複製", "非対称複製"], answer: 1, explain: "DNAが2本鎖に分離し、それぞれの鎖の塩基の相補性を利用して新しい鎖が合成される方式を半保存的複製という。" },
+  { section: "fukusei", type: "text", q: "生命活動に必要なすべての遺伝情報を含んだDNAの1組を何というか。", answer: ["ゲノム"], explain: "ゲノムは「遺伝子の領域」と「遺伝子以外の領域」からなり、ヒトでは遺伝子の領域は全体の約1.5%にすぎない。" },
+  { section: "fukusei", type: "mc", q: "ヒトの体細胞に含まれる染色体の本数と、その内訳として正しいものは?", options: ["23本(父親由来のみ)", "46本(父親由来23本+母親由来23本)", "92本(父親由来46本+母親由来46本)", "23本(母親由来のみ)"], answer: 1, explain: "ヒトの体細胞には父親由来23本、母親由来23本の計46本の染色体が存在し、2組のゲノムをもつ。" },
+  { section: "fukusei", type: "text", q: "形や大きさが同じで、一方が父親由来、他方が母親由来である染色体の組を何というか。", answer: ["相同染色体"], explain: "ヒトの体細胞の染色体46本は23対の相同染色体からなる。" },
+  { section: "fukusei", type: "mc", q: "ヒトの遺伝子はおよそ何個あるとされるか?", options: ["約2,000個", "約20,000個", "約200,000個", "約2,000,000個"], answer: 1, explain: "ヒトの遺伝子は約20,000個。ヒトゲノム全体は約30億塩基対からなる。" },
+  { section: "fukusei", type: "mc", q: "分裂によって生じた細胞が特定の形やはたらきをもつようになることを何というか?", options: ["分化(細胞分化)", "受精", "転写", "半保存的複製"], answer: 0, explain: "細胞分化した細胞は、いずれも基本的に同じゲノムをもつが、細胞ごとに発現する遺伝子が異なるため、異なる形やはたらきをもつようになる。" },
+
+  { section: "shuki", type: "mc", q: "細胞周期のうち、DNAの複製(合成)が行われる時期はどれか?", options: ["G1期", "S期", "G2期", "M期"], answer: 1, explain: "S期(DNA合成準備期)でDNAが複製される。G1期はDNA合成準備の時期、G2期は分裂準備の時期である。" },
+  { section: "shuki", type: "text", q: "分裂を停止して間期にとどまる時期を何というか。", answer: ["G0期"], explain: "再生中の肝細胞など、細胞分裂を外れてG0期(静止期)に入る場合もある。" },
+  { section: "shuki", type: "mc", q: "体細胞分裂の過程で、染色体が細胞の中央(赤道面)に並ぶのはどの時期か?", options: ["前期", "中期", "後期", "終期"], answer: 1, explain: "前期に染色体が凝縮して出現し、中期に赤道面に並び、後期に両極へ移動し、終期に核膜が再形成される。" },
+  { section: "shuki", type: "text", q: "植物細胞の体細胞分裂の終期に、2つの娘細胞に分かれる際に形成される構造は何か。", answer: ["細胞板"], explain: "動物細胞では細胞質のくびれによって分裂するのに対し、植物細胞では細胞板の形成によって2つの娘細胞に分かれる。" },
+  { section: "shuki", type: "mc", q: "細胞1個あたりのDNA量は、G1期を1とすると、G2期・M期ではおよそどうなるか?", options: ["0.5", "1(変化しない)", "2", "4"], answer: 2, explain: "S期でDNA量が2倍に増加し、G2期・M期はその状態(2)を保つ。分裂終期に2つの娘細胞に等しく分配されて再び1に戻る。" },
+
+  { section: "tensha", type: "mc", q: "遺伝情報がDNA→RNA→タンパク質の順に一方向に流れるという原則を何というか?", options: ["セントラルドグマ", "半保存的複製", "形質転換", "シャルガフの規則"], answer: 0, explain: "DNAの遺伝情報がRNA(転写)を経てタンパク質(翻訳)に一方向に流れる原則をセントラルドグマという。" },
+  { section: "tensha", type: "text", q: "DNAの遺伝情報がmRNAに写し取られる過程を何というか。", answer: ["転写"], explain: "DNAの2本鎖の一部がほどけ、塩基の相補性にもとづいてRNAのヌクレオチドが結合し、mRNAがつくられる。" },
+  { section: "tensha", type: "text", q: "mRNAの塩基配列がアミノ酸配列に変換される過程を何というか。", answer: ["翻訳"], explain: "mRNAの塩基3つの並び方(コドン)が1つのアミノ酸を指定し、tRNAがアミノ酸を運んでタンパク質が合成される。" },
+  { section: "tensha", type: "mc", q: "mRNAの塩基3つの組み合わせでアミノ酸を指定する暗号を何というか?", options: ["アンチコドン", "コドン", "ゲノム", "ヌクレオチド"], answer: 1, explain: "コドンはmRNAのトリプレット(塩基3つの組)であり、1つのコドンが1つのアミノ酸を指定する。" },
+  { section: "tensha", type: "text", q: "翻訳の開始を指定するコドン(開始コドン)は何か。塩基配列で答えよ。", answer: ["AUG"], explain: "開始コドンはAUGで、メチオニンを指定する。終止コドンにはUAA・UAG・UGAがある。" },
+  { section: "tensha", type: "mc", q: "RNAを構成する塩基のうち、DNAには無くRNAだけに含まれるものはどれか?", options: ["アデニン(A)", "グアニン(G)", "ウラシル(U)", "シトシン(C)"], answer: 2, explain: "DNAの塩基はA・T・G・C、RNAの塩基はA・U・G・Cであり、TのかわりにU(ウラシル)を含む。" },
+];
+
+const KANA = ["A", "B", "C", "D"];
+document.getElementById("footNote").textContent = "生物基礎「遺伝子とその働き」確認テスト / 全" + questions.length + "問";
+
+let qIndex = 0;
+let answers = [];
+let revealed = false;
+let selectedIdx = null;
+
+function normalize(str) {
+  return str.trim().replace(/\s+/g, "")
+    .replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xfee0))
+    .toUpperCase();
+}
+function sectionMeta(id) { return sections.find(s => s.id === id); }
+function esc(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+const app = document.getElementById("app");
+
+function renderCover() {
+  let toc = sections.map(s =>
+    `<div class="toc-row"><span class="label">${s.label}</span><span class="title">${s.title}</span><span class="range">${s.range}</span></div>`
+  ).join("");
+  app.innerHTML = `
+    <div class="cover">
+      <p class="cover-eyebrow">生物基礎 第1編 第2章</p>
+      <h1>遺伝子とその働き<br>確認テスト</h1>
+      <p class="sub">形質転換の発見からセントラルドグマまで、全${questions.length}問</p>
+      <div class="toc">${toc}</div>
+      <button class="start-btn" id="startBtn">テストを始める →</button>
+      <p class="meta-line">一問ずつ回答し、その場で正誤と解説が表示されます。</p>
+    </div>`;
+  document.getElementById("startBtn").onclick = startQuiz;
+}
+
+function startQuiz() {
+  qIndex = 0; answers = []; revealed = false; selectedIdx = null;
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const q = questions[qIndex];
+  const meta = sectionMeta(q.section);
+  const total = questions.length;
+
+  let rail = "";
+  for (let i = 0; i < total; i++) {
+    rail += `<div class="progress-seg"><span style="transform:${i <= qIndex ? "scaleX(1)" : "scaleX(0)"}"></span></div>`;
   }
 
-  function renderTerms(){
-    const grid = document.getElementById("term-grid");
-    grid.innerHTML = "";
-    Object.keys(DATA).forEach(term => {
-      const btn = document.createElement("div");
-      btn.className = "choice";
-      btn.tabIndex = 0;
-      btn.textContent = term;
-      btn.onclick = () => selectTerm(term);
-      btn.onkeydown = e => { if(e.key === "Enter") selectTerm(term); };
-      grid.appendChild(btn);
+  let body = "";
+  if (q.type === "mc") {
+    let opts = q.options.map((opt, i) => {
+      let cls = "opt-btn";
+      if (revealed && i === q.answer) cls += " correct";
+      else if (revealed && i === selectedIdx && i !== q.answer) cls += " wrong";
+      return `<button class="${cls}" ${revealed ? "disabled" : ""} data-idx="${i}"><span class="tag">${KANA[i]}</span><span>${esc(opt)}</span></button>`;
+    }).join("");
+    body = `<div class="options">${opts}</div>`;
+  } else {
+    body = `<div class="text-input-row">
+      <input type="text" id="textAns" placeholder="答えを入力" ${revealed ? "disabled" : ""} />
+      <button class="submit-btn" id="submitBtn" ${revealed ? "disabled" : ""}>回答する</button>
+    </div>`;
+  }
+
+  let feedback = "";
+  if (revealed) {
+    const last = answers[answers.length - 1];
+    feedback = `
+      <div class="feedback">
+        <div class="stamp${last.correct ? " ok" : ""}">${last.correct ? "正解" : "不正解"}</div>
+        <p class="explain">${!last.correct ? `正解: <strong>${esc(last.right)}</strong><br>` : ""}${esc(q.explain)}</p>
+      </div>
+      <div class="next-row"><button class="next-btn" id="nextBtn">${qIndex + 1 >= total ? "結果を見る →" : "次の問題 →"}</button></div>`;
+  }
+
+  app.innerHTML = `
+    <div class="progress-rail">${rail}</div>
+    <div class="section-tag"><span>${meta.label}・${meta.title}</span><span class="count">問 ${qIndex + 1} / ${total}</span></div>
+    <div class="q-card">
+      <p class="q-text">${esc(q.q)}</p>
+      ${body}
+      ${feedback}
+    </div>`;
+
+  if (q.type === "mc") {
+    app.querySelectorAll(".opt-btn").forEach(btn => {
+      btn.onclick = () => chooseOption(parseInt(btn.dataset.idx, 10));
+    });
+  } else {
+    const input = document.getElementById("textAns");
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.onclick = () => submitText(input.value);
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter") submitText(input.value);
+    });
+    input.addEventListener("input", () => {
+      submitBtn.disabled = input.value.trim() === "";
     });
   }
+  if (revealed) {
+    document.getElementById("nextBtn").onclick = next;
+  }
+}
 
-  function selectTerm(term){
-    currentTerm = term;
-    const grid = document.getElementById("subject-grid");
-    grid.innerHTML = "";
-    Object.keys(DATA[term]).forEach(subject => {
-      const btn = document.createElement("div");
-      btn.className = "choice";
-      btn.tabIndex = 0;
-      btn.textContent = subject;
-      btn.onclick = () => selectSubject(subject);
-      btn.onkeydown = e => { if(e.key === "Enter") selectSubject(subject); };
-      grid.appendChild(btn);
-    });
-    showView(viewSubject);
+function chooseOption(idx) {
+  if (revealed) return;
+  selectedIdx = idx;
+  const q = questions[qIndex];
+  const correct = idx === q.answer;
+  answers.push({ correct, given: q.options[idx], right: q.options[q.answer] });
+  revealed = true;
+  renderQuiz();
+}
+
+function submitText(value) {
+  if (revealed || value.trim() === "") return;
+  const q = questions[qIndex];
+  const given = normalize(value);
+  const correct = q.answer.some(a => normalize(a) === given);
+  answers.push({ correct, given: value.trim(), right: q.answer[0] });
+  revealed = true;
+  renderQuiz();
+}
+
+function next() {
+  if (qIndex + 1 >= questions.length) {
+    renderResult();
+    return;
+  }
+  qIndex++; revealed = false; selectedIdx = null;
+  renderQuiz();
+}
+
+function renderResult() {
+  const total = questions.length;
+  const score = answers.filter(a => a.correct).length;
+  const pct = Math.round((score / total) * 100);
+  const msg = pct >= 90 ? "見事、免許皆伝。" : pct >= 70 ? "よく身についています。" : pct >= 50 ? "もう一息、復習を。" : "基本から見直しましょう。";
+
+  const sectionScores = sections.map(s => {
+    const idxs = questions.map((q, i) => q.section === s.id ? i : -1).filter(i => i >= 0);
+    const got = idxs.filter(i => answers[i] && answers[i].correct).length;
+    return { ...s, got, of: idxs.length };
+  });
+
+  let scoreRows = sectionScores.map(s => `
+    <div class="sec-score-row">
+      <span class="name">${s.label}・${s.title}</span>
+      <span class="bar"><span style="width:${(s.got / s.of) * 100}%"></span></span>
+      <span class="val">${s.got}/${s.of}</span>
+    </div>`).join("");
+
+  const wrong = questions.map((q, i) => ({ q, a: answers[i], i })).filter(x => x.a && !x.a.correct);
+  let reviewHtml = "";
+  if (wrong.length > 0) {
+    reviewHtml = `<div class="review-list">${wrong.map(({ q, a, i }) => `
+      <div class="review-item">
+        <div class="q">${i + 1}. ${esc(q.q)}</div>
+        <div class="your">あなたの回答: ${esc(a.given)}</div>
+        <div class="right">正解: ${esc(a.right)}</div>
+      </div>`).join("")}</div>`;
   }
 
-  function selectSubject(subject){
-    document.getElementById("links-heading").textContent = currentTerm + " ・ " + subject;
-    const list = document.getElementById("links-list");
-    list.innerHTML = "";
-    const links = DATA[currentTerm][subject] || [];
-    if(links.length === 0){
-      const li = document.createElement("li");
-      li.style.padding = "12px 4px";
-      li.style.color = "var(--sub)";
-      li.style.fontSize = "14px";
-      li.textContent = "まだリンクがありません";
-      list.appendChild(li);
-    } else {
-      links.forEach(link => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.className = "link";
-        a.href = link.url;
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.innerHTML = '<div class="title">' + link.title + '</div><div class="note">' + link.note + '</div>';
-        li.appendChild(a);
-        list.appendChild(li);
-      });
-    }
-    showView(viewLinks);
-  }
+  app.innerHTML = `
+    <div class="result-card">
+      <div class="big-stamp"><span class="score">${score}</span><span class="of">／ ${total}問</span></div>
+      <p class="result-msg">${msg}</p>
+      <p class="result-sub">正答率 ${pct}%</p>
+      <div class="section-scores">${scoreRows}</div>
+      ${reviewHtml}
+      <button class="retry-btn" id="retryBtn">もう一度挑戦する</button>
+    </div>`;
+  document.getElementById("retryBtn").onclick = startQuiz;
+}
 
-  document.getElementById("back-to-term").onclick = () => showView(viewTerm);
-  document.getElementById("back-to-subject").onclick = () => showView(viewSubject);
-
-  renderTerms();
+renderCover();
 </script>
 </body>
 </html>
