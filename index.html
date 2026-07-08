@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>リンク</title>
+<style>
+  :root{
+    --bg:#fafafa;
+    --text:#222;
+    --sub:#666;
+    --line:#e0e0e0;
+    --accent:#2563eb;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    line-height:1.6;
+  }
+  .wrap{
+    max-width:640px;
+    margin:0 auto;
+    padding:48px 20px 80px;
+  }
+  h1{
+    font-size:22px;
+    margin:0 0 24px;
+  }
+  .back{
+    display:inline-block;
+    font-size:13px;
+    color:var(--accent);
+    text-decoration:none;
+    margin-bottom:20px;
+    cursor:pointer;
+  }
+  .back::before{ content:"‹ "; }
+
+  .choice-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .choice{
+    display:block;
+    text-align:center;
+    padding:22px 10px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:8px;
+    font-size:16px;
+    font-weight:600;
+    color:var(--text);
+    cursor:pointer;
+    transition:background .12s ease, border-color .12s ease;
+  }
+  .choice:hover, .choice:focus-visible{
+    background:#f0f4ff;
+    border-color:var(--accent);
+    outline:none;
+  }
+
+  h2{
+    font-size:14px;
+    color:var(--sub);
+    font-weight:600;
+    margin:0 0 10px;
+    padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  ul{
+    list-style:none;
+    margin:0; padding:0;
+  }
+  li + li{ margin-top:2px; }
+  a.link{
+    display:block;
+    text-decoration:none;
+    color:var(--text);
+    padding:12px 4px;
+    border-bottom:1px solid var(--line);
+    transition:background .12s ease;
+  }
+  a.link:hover, a.link:focus-visible{
+    background:#f0f4ff;
+    outline:none;
+  }
+  a.link .title{
+    font-size:15px;
+    font-weight:600;
+  }
+  a.link .title::after{
+    content:" ›";
+    color:var(--accent);
+  }
+  a.link .note{
+    font-size:13px;
+    color:var(--sub);
+    margin-top:2px;
+  }
+
+  .view{ display:none; }
+  .view.active{ display:block; }
+
+  footer{
+    margin-top:48px;
+    font-size:12px;
+    color:var(--sub);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>リンク</h1>
+
+  <!--
+    ▼データの編集方法
+    下の script 内の DATA オブジェクトを書き換えるだけでOKです。
+    構造: DATA["1学期"]["数学"] = [ {title, url, note}, ... ]
+    学期・科目・リンクは自由に追加/削除できます。
+  -->
+
+  <!-- Step 1: 学期選択 -->
+  <div id="view-term" class="view active">
+    <div class="choice-grid" id="term-grid"></div>
+  </div>
+
+  <!-- Step 2: 教科選択 -->
+  <div id="view-subject" class="view">
+    <a class="back" id="back-to-term">学期選択に戻る</a>
+    <div class="choice-grid" id="subject-grid"></div>
+  </div>
+
+  <!-- Step 3: リンク一覧 -->
+  <div id="view-links" class="view">
+    <a class="back" id="back-to-subject">教科選択に戻る</a>
+    <h2 id="links-heading"></h2>
+    <ul id="links-list"></ul>
+  </div>
+
+  <footer>最終更新: 2026年7月</footer>
+</div>
+
+<script>
+  // ▼ここを編集してリンクを追加してください
+  const DATA = {
+    "1学期": {
+      "数学": [
+        { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
+      ],
+      "英語": [
+        { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
+      ],
+      "物理": [
+        { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
+      ],
+      "化学": [
+        { title: "サイト名を入力", url: "https://example.com", note: "説明を入力" }
+      ]
+    },
+    "2学期": {
+      "数学": [], "英語": [], "物理": [], "化学": []
+    },
+    "3学期": {
+      "数学": [], "英語": [], "物理": [], "化学": []
+    }
+  };
+
+  let currentTerm = null;
+
+  const viewTerm = document.getElementById("view-term");
+  const viewSubject = document.getElementById("view-subject");
+  const viewLinks = document.getElementById("view-links");
+
+  function showView(view){
+    [viewTerm, viewSubject, viewLinks].forEach(v => v.classList.remove("active"));
+    view.classList.add("active");
+  }
+
+  function renderTerms(){
+    const grid = document.getElementById("term-grid");
+    grid.innerHTML = "";
+    Object.keys(DATA).forEach(term => {
+      const btn = document.createElement("div");
+      btn.className = "choice";
+      btn.tabIndex = 0;
+      btn.textContent = term;
+      btn.onclick = () => selectTerm(term);
+      btn.onkeydown = e => { if(e.key === "Enter") selectTerm(term); };
+      grid.appendChild(btn);
+    });
+  }
+
+  function selectTerm(term){
+    currentTerm = term;
+    const grid = document.getElementById("subject-grid");
+    grid.innerHTML = "";
+    Object.keys(DATA[term]).forEach(subject => {
+      const btn = document.createElement("div");
+      btn.className = "choice";
+      btn.tabIndex = 0;
+      btn.textContent = subject;
+      btn.onclick = () => selectSubject(subject);
+      btn.onkeydown = e => { if(e.key === "Enter") selectSubject(subject); };
+      grid.appendChild(btn);
+    });
+    showView(viewSubject);
+  }
+
+  function selectSubject(subject){
+    document.getElementById("links-heading").textContent = currentTerm + " ・ " + subject;
+    const list = document.getElementById("links-list");
+    list.innerHTML = "";
+    const links = DATA[currentTerm][subject] || [];
+    if(links.length === 0){
+      const li = document.createElement("li");
+      li.style.padding = "12px 4px";
+      li.style.color = "var(--sub)";
+      li.style.fontSize = "14px";
+      li.textContent = "まだリンクがありません";
+      list.appendChild(li);
+    } else {
+      links.forEach(link => {
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+        a.className = "link";
+        a.href = link.url;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.innerHTML = '<div class="title">' + link.title + '</div><div class="note">' + link.note + '</div>';
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    }
+    showView(viewLinks);
+  }
+
+  document.getElementById("back-to-term").onclick = () => showView(viewTerm);
+  document.getElementById("back-to-subject").onclick = () => showView(viewSubject);
+
+  renderTerms();
+</script>
+</body>
+</html>
